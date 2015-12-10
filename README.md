@@ -1,5 +1,7 @@
 # DnyDNS API
 
+![#SWAG passing](http://u.dropme.de/5274/28ef04/swag-passing.svg)
+
 Eine PHP-Anwendung, die eine API bereitstellt, um ein eigenes DynDNS zu konfigurieren und zu betreiben.
 
 ## Deployment
