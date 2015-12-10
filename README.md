@@ -93,7 +93,8 @@ define('DB_PASS', 'changeme1');
 Einen neuen DynDNS-Host in die Datenbank hinzufügen:
 
 ```sql
-INSERT INTO hosts (hostname, description, client_secret) VALUES ("router01-da", "Router in Darmstadt", "halte dies geheim, damit kann man die IP-Adresse setzen!");
+INSERT INTO hosts (hostname, description, client_secret) VALUES ("router01-da", "Router in Darmstadt", \
+  "halte dies geheim, damit kann man die IP-Adresse setzen!");
 ```
 
 Aktuelle IP-Adressen und Informationen aller Hosts abfragen:
@@ -113,7 +114,10 @@ curl https://dyn.your-server.example/ip
 Neuen Wert für die eigene IP-Adresse setzen (POST):
 
 ```
-curl -H "Content-Type: application/json" -X POST -d '{"hostname":"router01-da","ip":"10.0.1.1","client_secret":"you know it"}' https://dyn.your-server.example/
+curl -H "Content-Type: application/json" \
+     -X POST \
+     -d '{"hostname":"router01-da","ip":"10.0.1.1","client_secret":"you know it"}' \
+     https://dyn.your-server.example/
 # JSON response, success / error
 ```
 
