@@ -122,6 +122,37 @@ curl -H "Content-Type: application/json" \
 ```
 
 
+## Beispielkonfiguration
+
+Einen Cron-Job einrichten, um alle fünf Minuten die IP-Adresse zu aktualisieren:  
+`/etc/crontab`
+
+```
+# run DynDNS reporter every five minutes
+*/5 *   * * *   root    /usr/local/bin/dyndns-updater.sh
+```
+
+Shell-Skript, welches die externe Adresse lädt und der API mitteilt. Hier müssen URL, Hostname und `client_secret` noch angepasst werden:  
+`/usr/local/bin/dyndns-updater.sh`
+
+```
+#!/bin/bash
+
+# configure client_secret and hostname
+HOSTNAME=homer
+CLIENT_SECRET="you still know it, right?"
+
+# fetch current external IP address
+IP=`curl https://dyn.your-server.example/ip`
+
+# report IP address to API
+curl -H "Content-Type: application/json" \
+     -X POST \
+     -d '{"hostname":"'$HOSTNAME'","ip":"'$IP'","client_secret":"'$CLIENT_SECRET'"}' \
+     https://dyn.your-server.example/
+```
+
+
 ## TODO
 
  * korrekte HTTP Antwortcodes
