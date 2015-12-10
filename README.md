@@ -1,4 +1,4 @@
-# DnyDNS API
+# DynDNS API
 
 ![#SWAG passing](http://u.dropme.de/5274/28ef04/swag-passing.svg)
 
