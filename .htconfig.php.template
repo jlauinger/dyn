@@ -1,6 +1,0 @@
-<?php
-
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'dyn');
-define('DB_USER', 'dyn');
-define('DB_PASS', 'changeme1');

@@ -16,78 +16,20 @@ git clone https://github.com/jlauinger/dyn.git
 
 Sicherstellen, dass die benötigten Tools vorhanden sind (Debian):
 
-```shell
-curl -sS https://getcomposer.org/installer | php -- --install-dir=bin --filename=composer
-```
+ - Docker
+ - Docker Compose
 
-### Abhängigkeiten auflösen
 
-Alle Abhängigkeiten installieren :sparkles:
+### Container starten
 
-```shell
-composer install
-```
-
-### Webserver
-
-Einen Webserver konfigurieren, sodass PHP ausgeführt wird.
-
-**nginx:**
-
-```
-listen [::]:443 ssl;
-
-[...]
-
-location ~ \.php$ {
-  include snippets/fastcgi-php.conf;
-  fastcgi_pass unix:/var/run/php5-fpm.sock;
-}
-
-index index.php;
-location / {
-  try_files $uri $uri.html $uri/ =404;
-  rewrite ^/(.*)$ /index.php last;
-}
-```
-
-Achtung: unbedingt ausschließlich HTTPS verwenden, da bei jeder POST-Anfrage ein `client_secret` übertragen wird. Erhält ein Angreifer dieses, kann er beliebige IP-Adressen für den Host setzen.
-
-### Datenbank
-
-Eine MySQL-Datenbank für die Anwendung erstellen, z.B. `dyn`. Einen Datenbankbenutzer, z.B. `dyn` erstellen und ihm alle Rechte auf die Datenbank gewähren. Dessen Zugangsdaten müssen in `.htconfig.php` konfiguriert werden.
-
-```sql
-CREATE DATABASE dyn;
-CREATE USER 'dyn'@'localhost' IDENTIFIED BY 'changeme1';
-GRANT ALL PRIVILEGES ON dyn.* TO 'dyn'@'localhost';
-FLUSH PRIVILEGES;
-```
-
-Das Datenbankschema importieren: (eventuell Zugangsdaten anpassen):
+Um die Anwendung zu starten, können durch Docker Compose einfach die benötigten Container gestartet
+werden:
 
 ```shell
-mysql dyn -u dyn -p < sqlsync/dyn.sql
+docker-compose up
 ```
 
-### Anwendungseinstellungen
-
-Die Datei `.htconfig.php` aus der Vorlage erstellen:
-
-```shell
-cp .htconfig.php.template .htconfig.php
-```
-
-Darin die Zugangsdaten zur Datenbank konfigurieren:
-
-```php
-[...]
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'dyn');
-define('DB_USER', 'dyn');
-define('DB_PASS', 'changeme1');
-[...]
-```
+Vorher sollten in `docker-compose.yml` die MySQL-Zugangsdaten in den Umgebungsvariablen geändert werden.
 
 
 ## Benutzung

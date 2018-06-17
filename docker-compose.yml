@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+  web:
+    image: jlauinger/dyn
+    build: .
+    environment:
+      - DB_USER=dyn
+      - DB_PASSWORD=changeme1
+      - DB_DATABASE=dyn
+      - DB_HOST=db
+    links:
+      - db
+    ports:
+      - 3000:80
+    restart: always
+
+  db:
+    image: mariadb:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=a
+      - MYSQL_DATABASE=dyn
+      - MYSQL_USER=dyn
+      - MYSQL_PASSWORD=changeme1
+    restart: always
